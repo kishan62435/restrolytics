@@ -1,26 +1,250 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-background: 0 0% 100%;
+  --color-foreground: 222.2 84% 4.9%;
+  --color-card: 0 0% 100%;
+  --color-card-foreground: 222.2 84% 4.9%;
+  --color-popover: 0 0% 100%;
+  --color-popover-foreground: 222.2 84% 4.9%;
+  --color-primary: 142 76% 36%;
+  --color-primary-foreground: 0 0% 100%;
+  --color-secondary: 210 40% 96%;
+  --color-secondary-foreground: 222.2 84% 4.9%;
+  --color-muted: 210 40% 96%;
+  --color-muted-foreground: 215.4 16.3% 46.9%;
+  --color-accent: 142 76% 36%;
+  --color-accent-foreground: 0 0% 100%;
+  --color-destructive: 0 84.2% 60.2%;
+  --color-destructive-foreground: 0 0% 100%;
+  --color-border: 214.3 31.8% 91.4%;
+  --color-input: 214.3 31.8% 91.4%;
+  --color-ring: 142 76% 36%;
+  --radius: 0.75rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
+/* Dark theme - this will override the @theme variables */
+.dark {
+  --color-background: 222.2 84% 4.9%;
+  --color-foreground: 210 40% 98%;
+  --color-card: 217.2 32.6% 17.5%;
+  --color-card-foreground: 210 40% 98%;
+  --color-popover: 217.2 32.6% 17.5%;
+  --color-popover-foreground: 210 40% 98%;
+  --color-primary: 142 76% 36%;
+  --color-primary-foreground: 0 0% 100%;
+  --color-secondary: 217.2 32.6% 17.5%;
+  --color-secondary-foreground: 210 40% 98%;
+  --color-muted: 217.2 32.6% 17.5%;
+  --color-muted-foreground: 215 20.2% 65.1%;
+  --color-accent: 217.2 32.6% 17.5%;
+  --color-accent-foreground: 210 40% 98%;
+  --color-destructive: 0 62.8% 30.6%;
+  --color-destructive-foreground: 210 40% 98%;
+  --color-border: 217.2 32.6% 17.5%;
+  --color-input: 217.2 32.6% 17.5%;
+  --color-ring: 142 76% 36%;
+}
+
+/* Force theme application to ensure colors change */
+.dark body {
+  background-color: hsl(var(--color-background));
+  color: hsl(var(--color-foreground));
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: hsl(var(--color-background));
+  color: hsl(var(--color-foreground));
+}
+
+/* Ensure primary colors work in both themes */
+.bg-primary {
+  background-color: hsl(var(--color-primary));
+}
+
+.text-primary-foreground {
+  color: hsl(var(--color-primary-foreground));
+}
+
+.bg-card {
+  background-color: hsl(var(--color-card));
+}
+
+.text-foreground {
+  color: hsl(var(--color-foreground));
+}
+
+.text-muted-foreground {
+  color: hsl(var(--color-muted-foreground));
+}
+
+.border-border {
+  border-color: hsl(var(--color-border));
+}
+
+/* Professional Enterprise Dashboard Styling */
+.card-enterprise {
+  background: hsl(var(--color-card));
+  border: 1px solid hsl(var(--color-border));
+  border-radius: 12px;
+  box-shadow: 
+    0 1px 3px 0 rgba(0, 0, 0, 0.05),
+    0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-enterprise::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(var(--color-primary)), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-enterprise:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 10px 25px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-color: hsl(var(--color-primary));
+}
+
+.card-enterprise:hover::before {
+  opacity: 1;
+}
+
+/* Professional Background Gradients */
+.bg-enterprise {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.bg-enterprise-dark {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+}
+
+.bg-card-enterprise {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.bg-card-enterprise-dark {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+}
+
+/* Professional Text Gradients */
+.text-enterprise-primary {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-enterprise-secondary {
+  background: linear-gradient(135deg, #475569 0%, #64748b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Professional Button Styling */
+.btn-enterprise {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.btn-enterprise:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px 0 rgba(5, 150, 105, 0.3);
+}
+
+/* Professional Metric Cards */
+.metric-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #059669, #10b981, #34d399);
+}
+
+.metric-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-color: #10b981;
+}
+
+/* Professional Header Styling */
+.header-enterprise {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.header-enterprise-dark {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  border-bottom: 1px solid #475569;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Professional Filter Tags */
+.filter-tag {
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #475569;
+  transition: all 0.2s ease;
+}
+
+.filter-tag:hover {
+  background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+  border-color: #94a3b8;
+}
+
+/* Professional Loading States */
+.loading-enterprise {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: loading-shimmer 1.5s infinite;
+}
+
+@keyframes loading-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
