@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ShoppingCart } from "lucide-react";
+import { useMemo } from "react";
 
 export default function OrdersList({ 
     analyticsParams, 
@@ -19,6 +20,31 @@ export default function OrdersList({
     refetchOrders
 }) {
     
+    const selectedRestaurantAnalytics = useMemo(() => {
+        if (!selectedRestaurant || !computedAnalytics.trendsByRestaurant) {
+            return {
+                totalOrders: 0,
+                totalRevenue: 0,
+                averageOrderValue: 0
+            };
+        }
+
+        const restaurantTrends = computedAnalytics.trendsByRestaurant[selectedRestaurant.id];
+        if (!restaurantTrends) {
+            return {
+                totalOrders: 0,
+                totalRevenue: 0,
+                averageOrderValue: 0
+            };
+        }
+
+        return {
+            totalOrders: restaurantTrends.total_orders || 0,
+            totalRevenue: restaurantTrends.total_revenue || 0,
+            averageOrderValue: restaurantTrends.average_order_value || 0
+        };
+    }, [selectedRestaurant, computedAnalytics.trendsByRestaurant]);
+
     if (!selectedRestaurant) {
         return null;
     }
@@ -53,13 +79,13 @@ export default function OrdersList({
                         </div>
                         <div>
                             <div className="text-lg font-semibold text-primary">
-                                ₹{(computedAnalytics.totalRevenue || 0).toFixed(2)}
+                                ₹{(selectedRestaurantAnalytics.totalRevenue || 0).toFixed(2)}
                             </div>
                             <div className="text-sm text-muted-foreground">Total Revenue</div>
                         </div>
                         <div>
                             <div className="text-lg font-semibold text-primary">
-                                ₹{(computedAnalytics.averageOrderValue || 0).toFixed(2)}
+                                ₹{(selectedRestaurantAnalytics.averageOrderValue || 0).toFixed(2)}
                             </div>
                             <div className="text-sm text-muted-foreground">Average Order Value</div>
                         </div>
