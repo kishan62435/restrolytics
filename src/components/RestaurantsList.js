@@ -62,7 +62,7 @@ export default function RestaurantsList({
                             <SelectTrigger className="w-[140px]">
                                 <SelectValue />
                             </SelectTrigger>
-                            <SelectContent>
+                            <SelectContent className="bg-card border shadow-lg">
                                 <SelectItem value="name">Name</SelectItem>
                                 <SelectItem value="location">Location</SelectItem>
                                 <SelectItem value="cuisine">Cuisine</SelectItem>
@@ -81,8 +81,8 @@ export default function RestaurantsList({
                 </div>
 
                 {/* View Controls */}
-                <div className="flex justify-between items-center mb-6">
-                    <div className="flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div className="flex items-center gap-2 order-1">
                         <span className="text-sm font-medium">View:</span>
                         <Button
                             variant={viewMode === 'cards' ? 'default' : 'outline'}
@@ -104,13 +104,13 @@ export default function RestaurantsList({
                         </Button>
                     </div>
                     
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 order-2 sm:order-1">
                         <span className="text-sm font-medium">Items per page:</span>
                         <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
                             <SelectTrigger className="w-[80px]">
                                 <SelectValue placeholder={itemsPerPage === 'all' ? 'All' : itemsPerPage.toString()} />
                             </SelectTrigger>
-                            <SelectContent>
+                            <SelectContent className="bg-card border shadow-lg">
                                 <SelectItem value="2">2</SelectItem>
                                 <SelectItem value="5">5</SelectItem>
                                 <SelectItem value="10">10</SelectItem>
@@ -191,17 +191,17 @@ export default function RestaurantsList({
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-3">
-                                            <Button 
-                                                variant={selectedRestaurant?.id === restaurant.id ? "default" : "outline"}
-                                                onClick={() => handleRestaurantSelect(restaurant)}
-                                                className={`transition-all duration-200 ${
-                                                    selectedRestaurant?.id === restaurant.id 
-                                                        ? 'bg-primary text-primary-foreground shadow-lg' 
-                                                        : 'hover:bg-primary hover:text-primary-foreground'
-                                                }`}
-                                            >
-                                                {selectedRestaurant?.id === restaurant.id ? '✓ Selected' : 'Select'}
-                                            </Button>
+                                                                                         <Button 
+                                                 variant={selectedRestaurant?.id === restaurant.id ? "default" : "outline"}
+                                                 onClick={() => handleRestaurantSelect(restaurant)}
+                                                 className={`transition-all duration-200 min-w-[80px] ${
+                                                     selectedRestaurant?.id === restaurant.id 
+                                                         ? 'bg-primary text-primary-foreground shadow-lg' 
+                                                         : 'hover:bg-primary hover:text-primary-foreground'
+                                                 }`}
+                                             >
+                                                 {selectedRestaurant?.id === restaurant.id ? '✓' : 'Select'}
+                                             </Button>
                                         </div>
                                     </div>
                                 ))}
@@ -265,18 +265,18 @@ export default function RestaurantsList({
                                                     {new Date(restaurant.created_at).toLocaleDateString()}
                                                 </td>
                                                 <td className="p-3 text-right">
-                                                    <Button 
-                                                        variant={selectedRestaurant?.id === restaurant.id ? "default" : "outline"}
-                                                        size="sm"
-                                                        onClick={() => handleRestaurantSelect(restaurant)}
-                                                        className={`transition-all duration-200 ${
-                                                            selectedRestaurant?.id === restaurant.id 
-                                                                ? 'bg-primary text-primary-foreground shadow-lg' 
-                                                                : 'hover:bg-primary hover:text-primary-foreground'
-                                                        }`}
-                                                    >
-                                                        {selectedRestaurant?.id === restaurant.id ? '✓ Selected' : 'Select'}
-                                                    </Button>
+                                                                                                         <Button 
+                                                         variant={selectedRestaurant?.id === restaurant.id ? "default" : "outline"}
+                                                         size="sm"
+                                                         onClick={() => handleRestaurantSelect(restaurant)}
+                                                         className={`transition-all duration-200 min-w-[70px] ${
+                                                             selectedRestaurant?.id === restaurant.id 
+                                                                 ? 'bg-primary text-primary-foreground shadow-lg' 
+                                                                 : 'hover:bg-primary hover:text-primary-foreground'
+                                                         }`}
+                                                     >
+                                                         {selectedRestaurant?.id === restaurant.id ? '✓' : 'Select'}
+                                                     </Button>
                                                 </td>
                                             </tr>
                                         ))}
@@ -288,18 +288,31 @@ export default function RestaurantsList({
                         {/* Pagination */}
                         {totalPages > 1 && (
                             <div className="flex justify-center mt-8">
-                                <div className="flex items-center gap-2">
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        onClick={() => handlePageChange(currentPage - 1)}
-                                        disabled={currentPage === 1}
-                                    >
-                                        Previous
-                                    </Button>
+                                <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-2">
+                                    <div className="flex items-center gap-2 order-2 sm:order-1">
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => handlePageChange(currentPage - 1)}
+                                            disabled={currentPage === 1}
+                                            className="min-w-[80px]"
+                                        >
+                                            Previous
+                                        </Button>
+                                        
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => handlePageChange(currentPage + 1)}
+                                            disabled={currentPage === totalPages}
+                                            className="min-w-[80px]"
+                                        >
+                                            Next
+                                        </Button>
+                                    </div>
                                     
                                     {/* Page Numbers */}
-                                    <div className="flex items-center gap-1">
+                                    <div className="flex items-center gap-1 order-1 sm:order-2">
                                         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
                                             // Show first page, last page, current page, and pages around current
                                             if (
@@ -327,15 +340,6 @@ export default function RestaurantsList({
                                             return null;
                                         })}
                                     </div>
-                                    
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        onClick={() => handlePageChange(currentPage + 1)}
-                                        disabled={currentPage === totalPages}
-                                    >
-                                        Next
-                                    </Button>
                                 </div>
                             </div>
                         )}

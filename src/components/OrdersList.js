@@ -77,7 +77,7 @@ export default function OrdersList({
                             <SelectTrigger className="w-[100px]">
                                 <SelectValue placeholder={ordersItemsPerPage === 'all' ? 'All' : ordersItemsPerPage.toString()} />
                             </SelectTrigger>
-                            <SelectContent>
+                            <SelectContent className="bg-card border shadow-lg">
                                 <SelectItem value="10">10</SelectItem>
                                 <SelectItem value="20">20</SelectItem>
                                 <SelectItem value="50">50</SelectItem>
@@ -159,23 +159,36 @@ export default function OrdersList({
 
                         {/* Orders Pagination */}
                         {ordersTotalCount > 0 && (
-                            <div className="flex justify-between items-center mt-6">
-                                <div className="text-sm text-muted-foreground">
+                            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mt-6">
+                                <div className="text-sm text-muted-foreground text-center sm:text-left">
                                     Showing {((ordersCurrentPage - 1) * (ordersItemsPerPage === 'all' ? ordersData.length : ordersItemsPerPage)) + 1} to {Math.min(ordersCurrentPage * (ordersItemsPerPage === 'all' ? ordersData.length : ordersItemsPerPage), ordersTotalCount)} of {ordersTotalCount} results
                                 </div>
                                 {ordersTotalPages > 1 && (
-                                    <div className="flex items-center gap-2">
-                                        <Button
-                                            variant="outline"
-                                            size="sm"
-                                            onClick={() => handleOrdersPageChange(ordersCurrentPage - 1)}
-                                            disabled={ordersCurrentPage === 1}
-                                        >
-                                            Previous
-                                        </Button>
+                                    <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-2 w-full sm:w-auto">
+                                        <div className="flex items-center gap-2 order-2 sm:order-1">
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() => handleOrdersPageChange(ordersCurrentPage - 1)}
+                                                disabled={ordersCurrentPage === 1}
+                                                className="min-w-[80px]"
+                                            >
+                                                Previous
+                                            </Button>
+                                            
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() => handleOrdersPageChange(ordersCurrentPage + 1)}
+                                                disabled={ordersCurrentPage === ordersTotalPages}
+                                                className="min-w-[80px]"
+                                            >
+                                                Next
+                                            </Button>
+                                        </div>
                                         
                                         {/* Page Numbers */}
-                                        <div className="flex items-center gap-1">
+                                        <div className="flex items-center gap-1 order-1 sm:order-2">
                                             {Array.from({ length: ordersTotalPages }, (_, i) => i + 1).map((page) => {
                                                 // Show first page, last page, current page, and pages around current
                                                 if (
@@ -203,15 +216,6 @@ export default function OrdersList({
                                                 return null;
                                             })}
                                         </div>
-                                        
-                                        <Button
-                                            variant="outline"
-                                            size="sm"
-                                            onClick={() => handleOrdersPageChange(ordersCurrentPage + 1)}
-                                            disabled={ordersCurrentPage === ordersTotalPages}
-                                        >
-                                            Next
-                                        </Button>
                                     </div>
                                 )}
                             </div>
