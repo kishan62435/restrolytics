@@ -12,9 +12,13 @@ export const useOrders = (params, ordersParams) => {
 
     const lastOrdersParamsRef = useRef(null);
     const isInitialMount = useRef(true);
+    const currentPageRef = useRef(1);
+    const itemsPerPageRef = useRef(10);
+    const shouldFetchAfterPageResetRef = useRef(false);
+    const lastFetchSignatureRef = useRef(null);
 
     // Fetch orders data
-    const fetchOrders = useCallback(async (page = currentPage, perPage = itemsPerPage) => {
+    const fetchOrders = useCallback(async (page, perPage, force = false) => {
         
         if (!ordersParams || !ordersParams.restaurant_id) {
             setOrdersLoading(false);
@@ -25,11 +29,21 @@ export const useOrders = (params, ordersParams) => {
             setOrdersLoading(true);
             setError(null);
             
+            const resolvedPage = page ?? currentPageRef.current;
+            const resolvedPerPage = (perPage ?? itemsPerPageRef.current) === 'all' ? 1000 : (perPage ?? itemsPerPageRef.current);
+
             const apiParams = {
                 ...ordersParams,
-                page: page,
-                per_page: perPage === 'all' ? 1000 : perPage
+                page: resolvedPage,
+                per_page: resolvedPerPage
             };
+
+            const signature = JSON.stringify(apiParams);
+            if (!force && signature === lastFetchSignatureRef.current) {
+                setOrdersLoading(false);
+                return;
+            }
+            lastFetchSignatureRef.current = signature;
             
             // console.log('Fetching orders with params:', apiParams);
             
@@ -82,33 +96,47 @@ export const useOrders = (params, ordersParams) => {
         } finally {
             setOrdersLoading(false);
         }
-    }, [ordersParams, currentPage, itemsPerPage]);
+    }, [ordersParams]);
 
     // params change (initial load and filter changes)
     useEffect(() => {
-        if (ordersParams && ordersParams.restaurant_id) {
-            // console.log('Initial fetch or params changed, fetching orders');
-            fetchOrders();
+        if (!ordersParams || !ordersParams.restaurant_id) return;
+
+        if (currentPageRef.current !== 1) {
+            shouldFetchAfterPageResetRef.current = true;
+            setCurrentPage(1);
+            return;
         }
-    }, [ordersParams?.restaurant_id, ordersParams?.dateRange, ordersParams?.amountRange, ordersParams?.hourRange, fetchOrders, ordersParams]);
+
+        fetchOrders(1, itemsPerPageRef.current);
+    }, [ordersParams, fetchOrders]);
 
     // page or items per page change
     useEffect(() => {
-        if (ordersParams && ordersParams.restaurant_id && !ordersLoading && !isInitialMount.current) {
-            // console.log('Page/items per page changed, fetching orders:', { currentPage, itemsPerPage });
-            fetchOrders(currentPage, itemsPerPage);
+        currentPageRef.current = currentPage;
+    }, [currentPage]);
+
+    useEffect(() => {
+        itemsPerPageRef.current = itemsPerPage;
+    }, [itemsPerPage]);
+
+    useEffect(() => {
+        if (isInitialMount.current) return;
+
+        // Fetch for pagination changes or when params effect requested fetch after reset
+        fetchOrders(currentPage, itemsPerPage);
+        // Clear the flag if it was set
+        if (shouldFetchAfterPageResetRef.current) {
+            shouldFetchAfterPageResetRef.current = false;
         }
-    }, [currentPage, itemsPerPage, fetchOrders, ordersParams, ordersLoading]);
+    }, [currentPage, itemsPerPage, fetchOrders]);
 
     // Set initial mount to false after first render
     useEffect(() => {
         isInitialMount.current = false;
     }, []);
 
-    // Reset to first page on filters change
-    useEffect(() => {
-        setCurrentPage(1);
-    }, [ordersParams?.restaurant_id, ordersParams?.dateRange, ordersParams?.amountRange, ordersParams?.hourRange]);
+    // (removed) Reset to first page is now handled in params-change effect above
 
     // Handle page change
     const handlePageChange = (page) => {
@@ -126,8 +154,8 @@ export const useOrders = (params, ordersParams) => {
 
     // Refetch orders
     const refetch = useCallback(() => {
-        fetchOrders();
-    }, [fetchOrders]);
+        fetchOrders(currentPage, itemsPerPage, true);
+    }, [fetchOrders, currentPage, itemsPerPage]);
 
     return {
         ordersData,

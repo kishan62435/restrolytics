@@ -149,6 +149,22 @@ export default function DashboardPage() {
     const { computedAnalytics, analyticsLoading, topRestaurantsLoading, error: analyticsError, refetch: refetchAnalytics } = useAnalytics(analyticsParams, topRestaurantsParams);
 
     // Get orders data based on filters
+    const ordersParams = useMemo(() => ({
+        restaurant_id: selectedRestaurant?.id ?? null,
+        dateRange: activeFilters.dateRange,
+        customFromDate: activeFilters.customFromDate,
+        customToDate: activeFilters.customToDate,
+        amountRange: activeFilters.amountRange,
+        hourRange: activeFilters.hourRange
+    }), [
+        selectedRestaurant?.id,
+        activeFilters.dateRange,
+        activeFilters.customFromDate,
+        activeFilters.customToDate,
+        activeFilters.amountRange,
+        activeFilters.hourRange
+    ]);
+
     const { 
         ordersData, 
         ordersLoading, 
@@ -160,14 +176,7 @@ export default function DashboardPage() {
         handlePageChange: handleOrdersPageChange, 
         handleItemsPerPageChange: handleOrdersItemsPerPageChange, 
         refetch: refetchOrders 
-    } = useOrders(analyticsParams, {
-        restaurant_id: selectedRestaurant?.id,
-        dateRange: activeFilters.dateRange,
-        customFromDate: activeFilters.customFromDate,
-        customToDate: activeFilters.customToDate,
-        amountRange: activeFilters.amountRange,
-        hourRange: activeFilters.hourRange
-    });
+    } = useOrders(analyticsParams, ordersParams);
 
     // Filter and sort restaurants
     const filteredRestaurants = useMemo(() => {
