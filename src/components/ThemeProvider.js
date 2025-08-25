@@ -6,7 +6,7 @@ import ThemeToggle from './ThemeToggle';
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-    const [theme, setTheme] = useState('light');
+    const [theme, setTheme] = useState('dark');
 
     useEffect(() => {
         const savedTheme = localStorage.getItem('theme');
@@ -15,8 +15,8 @@ export function ThemeProvider({ children }) {
             setTheme(savedTheme);
         }
         else {
-            const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            setTheme(systemTheme);
+            // const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            // setTheme(systemTheme);
         }
     }, []);
 

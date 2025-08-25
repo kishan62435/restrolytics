@@ -400,7 +400,7 @@ export default function FilterBar({
                 {/* Action Buttons */}
                 <div className="flex gap-2">
                     <Button variant="outline" size="sm" onClick={handleReset} className="text-sm py-2">Reset</Button>
-                    <Button size="sm" onClick={handleApply} className="text-sm py-2">Apply</Button>
+                    {/* <Button size="sm" onClick={handleApply} className="text-sm py-2">Apply</Button> */}
                 </div>
             </div>
 
