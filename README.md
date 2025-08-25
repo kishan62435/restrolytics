@@ -1,4 +1,97 @@
-# Restrolytics Codebase Analysis
+# Restrolytics Codebase
+
+[🚀 Live Demo](https://restrolytics.vercel.app/)
+
+## Getting Started
+
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn package manager
+
+### Running the Project Locally
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd restrolytics
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp env.example .env.local
+   ```
+   Edit `.env.local` and configure your API endpoints if needed.
+
+4. **Start the development server**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+5. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000) to view the application.
+
+### Available Scripts
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Build the application for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint for code quality
+
+---
+
+[🚀 Live Demo](https://restrolytics.vercel.app/)
+## Getting Started
+
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn package manager
+
+### Running the Project Locally
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd restrolytics
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp env.example .env.local
+   ```
+   Edit `.env.local` and configure your API endpoints if needed.
+
+4. **Start the development server**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+5. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000) to view the application.
+
+### Available Scripts
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Build the application for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint for code quality
+
+---
 
 ## Project Overview
 
