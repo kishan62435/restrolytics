@@ -7,19 +7,21 @@
   --color-card-foreground: 222.2 84% 4.9%;
   --color-popover: 0 0% 100%;
   --color-popover-foreground: 222.2 84% 4.9%;
-  --color-primary: 142 76% 36%;
+  --color-navbar: hsl210 40% 98%;
+  --color-navbar-foreground: 222.2 47% 11%;
+  --color-primary: 152 61% 40%;
   --color-primary-foreground: 0 0% 100%;
   --color-secondary: 210 40% 96%;
   --color-secondary-foreground: 222.2 84% 4.9%;
   --color-muted: 210 40% 96%;
   --color-muted-foreground: 215.4 16.3% 46.9%;
-  --color-accent: 142 76% 36%;
+  --color-accent: 160 84% 39%;
   --color-accent-foreground: 0 0% 100%;
   --color-destructive: 0 84.2% 60.2%;
   --color-destructive-foreground: 0 0% 100%;
   --color-border: 214.3 31.8% 91.4%;
   --color-input: 214.3 31.8% 91.4%;
-  --color-ring: 142 76% 36%;
+  --color-ring: 152 61% 40%;
   --radius: 0.75rem;
 }
 
@@ -41,19 +43,21 @@
   --color-card-foreground: 210 40% 98%;
   --color-popover: 217.2 32.6% 17.5%;
   --color-popover-foreground: 210 40% 98%;
-  --color-primary: 142 76% 36%;
+  --color-navbar: 217.2 32.6% 17.5%;
+  --color-navbar-foreground: 210 40% 98%;
+  --color-primary: 152 61% 40%;
   --color-primary-foreground: 0 0% 100%;
   --color-secondary: 217.2 32.6% 17.5%;
   --color-secondary-foreground: 210 40% 98%;
   --color-muted: 217.2 32.6% 17.5%;
   --color-muted-foreground: 215 20.2% 65.1%;
-  --color-accent: 217.2 32.6% 17.5%;
+  --color-accent: 160 63% 45%;
   --color-accent-foreground: 210 40% 98%;
   --color-destructive: 0 62.8% 30.6%;
   --color-destructive-foreground: 210 40% 98%;
   --color-border: 217.2 32.6% 17.5%;
   --color-input: 217.2 32.6% 17.5%;
-  --color-ring: 142 76% 36%;
+  --color-ring: 152 61% 40%;
 }
 
 /* Force theme application to ensure colors change */

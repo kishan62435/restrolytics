@@ -274,7 +274,7 @@ export default function DashboardPage() {
             )}
             
             {/* Professional Header */}
-            <div className="border-b bg-card-subtle shadow-sm">
+            <div className="sticky top-0 z-50 border-b bg-navbar text-navbar-foreground/95 supports-[backdrop-filter]:bg-navbar/80 backdrop-blur shadow-sm">
                 <div className="flex items-center justify-between px-6 py-4">
                     <h1 className="text-2xl font-bold text-gradient-primary">Restrolytics</h1>
                     <ThemeToggle />
